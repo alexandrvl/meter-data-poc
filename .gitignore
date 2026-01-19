@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# dbt artifacts
+dbt/meterdata/logs/
+dbt/meterdata/target/
+
+# Airflow
+airflow/dags/__pycache__/
+
+# Docker
+*.env
+*.pem
+*.key
+
+# OS generated files
+.DS_Store
+.Trashes
+*.iml

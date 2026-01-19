@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: iceberg
+    database: iceberg
+    schema: bronze
+    tables:
+      - name: meter_data_raw

@@ -1,0 +1,22 @@
+meterdata:
+  target: dev, test
+  outputs:
+    dev:
+      type: trino
+      method: none  # No auth for local trino
+      user: admin
+      database: iceberg
+      schema: 'usage'
+      host: localhost
+      port: 8081
+      threads: 1
+    test:
+      type: trino
+      method: none  # No auth for local trino
+      user: admin
+      database: iceberg
+      schema: 'usage'
+      host: trino
+      port: 8080
+      threads: 1
+

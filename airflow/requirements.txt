@@ -1,0 +1,11 @@
+psycopg2-binary
+dbt-core~=1.8.0
+dbt-duckdb~=1.8.0
+dbt-trino~=1.8.0
+dbt-postgres~=1.8.0
+trino
+boto3>=1.28.0
+pyarrow
+s3fs
+duckdb>=0.9.0
+pandas>=1.5.0
