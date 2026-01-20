@@ -45,7 +45,7 @@ def generate_data(num_records=100):
 def ingest_data():
     """Generates data and writes to MinIO via DuckDB."""
     print("Generating data...")
-    data = generate_data(1000)
+    data = generate_data(6000000)
     data = pd.DataFrame(data)
     
     # Convert timestamps to UTC and ensure microsecond precision (pyiceberg doesn't support nanosecond)

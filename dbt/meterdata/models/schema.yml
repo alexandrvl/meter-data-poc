@@ -6,3 +6,30 @@ sources:
     schema: bronze
     tables:
       - name: meter_data_raw
+
+models:
+  - name: silver_meter_data
+    description: "Stores cleaned, deduplicated, and optimized meter readings. This model preserves the full history of readings and is partitioned and sorted for efficient querying of high-volume time-series data."
+    columns:
+      - name: objectId
+        description: "The unique identifier for the metering point."
+      - name: customerIdentifier
+        description: "The identifier for the customer associated with the meter."
+      - name: country
+        description: "The country where the meter is located."
+      - name: dataDirection
+        description: "Indicates the direction of data flow (e.g., consumption, production)."
+      - name: intervalgranylarity
+        description: "The granularity of the interval readings (e.g., 15 minutes)."
+      - name: dataQuality
+        description: "The quality of the data reading."
+      - name: measurementTime
+        description: "The timestamp of the meter reading interval. Part of the composite primary key."
+      - name: readingTime
+        description: "The timestamp when the reading was recorded by the meter."
+      - name: systemTime
+        description: "The timestamp when the reading was ingested into the system."
+      - name: amount
+        description: "The measured amount for the interval."
+      - name: usage_class
+        description: "A derived classification of the usage amount ('High', 'Medium', 'Low')."
