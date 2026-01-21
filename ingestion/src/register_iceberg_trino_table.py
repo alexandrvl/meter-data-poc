@@ -166,21 +166,21 @@ def create_iceberg_table(trino_client, pa_schema, table_location):
 
 def get_registered_folders(trino_client):
     """
-    Get list of already registered ingestion folders from the Iceberg table's metadata.
+    Get list of already registered ingestion folders by querying the Iceberg table's internal files metadata.
     
-    This function uses Trino to query the Iceberg table's metadata to find
-    which ingestion folders have already been added.
+    This function uses Trino to query the Iceberg table's '$files' metadata table,
+    which is highly efficient and avoids a full table scan.
     """
     registered_folders = set()
     
     try:
-        # Query Iceberg's metadata to get all files in the table
+        # Query Iceberg's '$files' metadata table to get all file paths
         query = f"""
-            SELECT "$path" 
-            FROM "{CATALOG_NAME}"."{NAMESPACE}"."{TABLE_NAME}"
+            SELECT "file_path" 
+            FROM "{CATALOG_NAME}"."{NAMESPACE}"."{TABLE_NAME}$files"
         """
         
-        logger.info(f"Querying registered files from Iceberg table...")
+        logger.info(f"Querying registered files from Iceberg metadata table ($files)...")
         cursor = trino_client.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
@@ -192,11 +192,12 @@ def get_registered_folders(trino_client):
                 folder_part = file_path.split("raw/")[1].split("/")[0]
                 registered_folders.add(folder_part)
         
-        logger.info(f"Found {len(registered_folders)} registered ingestion folders")
+        logger.info(f"Found {len(registered_folders)} registered ingestion folders from metadata")
         
     except Exception as e:
-        logger.warning(f"Error getting registered folders: {e}")
-        logger.info("Assuming table does not exist, returning empty registered folders set")
+        # If the table does not exist, this query will fail.
+        logger.warning(f"Could not query '$files' metadata table: {e}")
+        logger.info("Assuming table does not exist or is empty, returning empty set.")
         return set()
         
     return registered_folders
