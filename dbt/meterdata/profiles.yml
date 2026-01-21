@@ -9,7 +9,8 @@ meterdata:
       schema: 'usage'
       host: localhost
       port: 8081
-      threads: 1
+      threads: 5
+      batch_size_rows: 10000
     test:
       type: trino
       method: none  # No auth for local trino

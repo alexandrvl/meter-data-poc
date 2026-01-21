@@ -33,3 +33,11 @@ models:
         description: "The measured amount for the interval."
       - name: usage_class
         description: "A derived classification of the usage amount ('High', 'Medium', 'Low')."
+      - name: dataDirection_id
+        description: "Numeric ID for dataDirection: 1 for IMPORT, 2 for EXPORT."
+      - name: country_id
+        description: "Numeric ID for country: 1 for EST, 2 for LAT, 3 for LIT."
+      - name: intervalGranularity_id
+        description: "Numeric ID for interval granularity: 1 for PT15M, 2 for PT1H."
+      - name: dataQuality_id
+        description: "Numeric ID for data quality: 1 for VALID, 2 for ESTIMATED, 3 for INVALID."

@@ -50,17 +50,14 @@ SELECT
     objectId,
     customerIdentifier,
     country,
-    dataDirection,
-    intervalgranylarity,
-    dataQuality,
     measurementTime,
     readingTime,
     systemTime,
     amount,
-    CASE
-        WHEN amount > 50 THEN 'High'
-        WHEN amount > 20 THEN 'Medium'
-        ELSE 'Low'
-    END as usage_class
+    {{ classify_data_direction('dataDirection') }} as dataDirection_id,
+    {{ classify_country('country') }} as country_id,
+    {{ classify_interval_granularity('intervalgranylarity') }} as intervalGranularity_id,
+    {{ classify_data_quality('dataQuality') }} as dataQuality_id,
+    {{ classify_amount('amount') }} as usage_class
 FROM deduplicated
 WHERE rn = 1
